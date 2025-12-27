@@ -8,4 +8,8 @@ fn main() {
     println!("Basic operations:");
     println!("  add(42, 13) = {}", add(42, 13));
     println!("  multiply(7, 6) = {}", multiply(7, 6));
+
+    println!("\nRecursive factorial:");
+    println!("  5! = {}", factorial(5));
+    println!("  10! = {}", factorial(10));
 }
