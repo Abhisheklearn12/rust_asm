@@ -13,4 +13,27 @@ fn main() {
     println!("\nRecursive factorial:");
     println!("  5! = {}", factorial(5));
     println!("  10! = {}", factorial(10));
+
+    // C MATH FUNCTIONS DEMO
+    println!("\nC MATH FUNCTIONS:");
+
+    println!("Power function:");
+    println!("  2^10 = {}", power(2, 10));
+    println!("  5^3 = {}", power(5, 3));
+
+    println!("\nGCD and LCM:");
+    println!("  gcd(48, 18) = {}", gcd(48, 18));
+    println!("  lcm(12, 15) = {}", lcm(12, 15));
+
+    println!("\nPrime checking:");
+    for n in [17, 18, 19, 20, 97] {
+        println!("  is_prime({}) = {}", n, is_prime(n));
+    }
+
+    println!("\nFibonacci sequence:");
+    print!("  First 15 numbers: ");
+    for i in 0..15 {
+        print!("{} ", fibonacci(i));
+    }
+    println!();
 }

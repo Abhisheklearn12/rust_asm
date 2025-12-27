@@ -10,6 +10,17 @@ unsafe extern "C" {
     pub fn asm_factorial(n: i64) -> i64;
 }
 
+// C FUNCTION FFI DECLARATIONS
+
+unsafe extern "C" {
+    // Math utilities
+    pub fn c_power(base: i64, exponent: i32) -> i64;
+    pub fn c_gcd(a: i64, b: i64) -> i64;
+    pub fn c_lcm(a: i64, b: i64) -> i64;
+    pub fn c_is_prime(n: i64) -> i32;
+    pub fn c_fibonacci(n: i32) -> i64;
+}
+
 // SAFE RUST WRAPPERS - ASSEMBLY FUNCTIONS
 
 pub fn add(a: i64, b: i64) -> i64 {
@@ -22,6 +33,28 @@ pub fn multiply(a: i64, b: i64) -> i64 {
 
 pub fn factorial(n: i64) -> i64 {
     unsafe { asm_factorial(n) }
+}
+
+// SAFE RUST WRAPPERS - C MATH FUNCTIONS
+
+pub fn power(base: i64, exponent: i32) -> i64 {
+    unsafe { c_power(base, exponent) }
+}
+
+pub fn gcd(a: i64, b: i64) -> i64 {
+    unsafe { c_gcd(a, b) }
+}
+
+pub fn lcm(a: i64, b: i64) -> i64 {
+    unsafe { c_lcm(a, b) }
+}
+
+pub fn is_prime(n: i64) -> bool {
+    unsafe { c_is_prime(n) != 0 }
+}
+
+pub fn fibonacci(n: i32) -> i64 {
+    unsafe { c_fibonacci(n) }
 }
 
 // TESTS
