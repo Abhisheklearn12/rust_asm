@@ -82,4 +82,36 @@ mod tests {
         assert_eq!(factorial(0), 1);
         assert_eq!(factorial(1), 1);
     }
+
+    // C math tests
+    #[test]
+    fn test_c_power() {
+        assert_eq!(power(2, 10), 1024);
+        assert_eq!(power(5, 3), 125);
+    }
+
+    #[test]
+    fn test_c_gcd() {
+        assert_eq!(gcd(48, 18), 6);
+        assert_eq!(gcd(100, 50), 50);
+    }
+
+    #[test]
+    fn test_c_lcm() {
+        assert_eq!(lcm(12, 15), 60);
+        assert_eq!(lcm(100, 50), 100);
+    }
+
+    #[test]
+    fn test_c_is_prime() {
+        assert!(is_prime(17));
+        assert!(!is_prime(18));
+        assert!(is_prime(2));
+    }
+
+    #[test]
+    fn test_c_fibonacci() {
+        assert_eq!(fibonacci(10), 55);
+        assert_eq!(fibonacci(15), 610);
+    }
 }
