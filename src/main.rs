@@ -14,6 +14,13 @@ fn main() {
     println!("  5! = {}", factorial(5));
     println!("  10! = {}", factorial(10));
 
+    // SIMD Addition using SSE2
+    println!("\nSIMD vector addition:");
+    let vec_a = [10, 20, 30, 40];
+    let vec_b = [1, 2, 3, 4];
+    let result = simd_add_4(&vec_a, &vec_b);
+    println!("  {:?} + {:?} = {:?}", vec_a, vec_b, result);
+
     // C MATH FUNCTIONS DEMO
     println!("\nC MATH FUNCTIONS:");
 
