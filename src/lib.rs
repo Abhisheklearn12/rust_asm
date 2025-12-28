@@ -8,6 +8,9 @@ unsafe extern "C" {
     pub fn asm_add(a: i64, b: i64) -> i64;
     pub fn asm_multiply(a: i64, b: i64) -> i64;
     pub fn asm_factorial(n: i64) -> i64;
+
+    // SIMD Addition using SSE2
+    pub fn asm_simd_add_4(a: *const i32, b: *const i32, result: *mut i32);
 }
 
 // C FUNCTION FFI DECLARATIONS
@@ -33,6 +36,15 @@ pub fn multiply(a: i64, b: i64) -> i64 {
 
 pub fn factorial(n: i64) -> i64 {
     unsafe { asm_factorial(n) }
+}
+
+// SAFE Rust WRAPPER for SIMD Addition using SSE2
+pub fn simd_add_4(a: &[i32; 4], b: &[i32; 4]) -> [i32; 4] {
+    let mut result = [0i32; 4];
+    unsafe {
+        asm_simd_add_4(a.as_ptr(), b.as_ptr(), result.as_mut_ptr());
+    }
+    result
 }
 
 // SAFE RUST WRAPPERS - C MATH FUNCTIONS
@@ -81,6 +93,15 @@ mod tests {
         assert_eq!(factorial(5), 120);
         assert_eq!(factorial(0), 1);
         assert_eq!(factorial(1), 1);
+    }
+
+    // Unit test for SIMD Addition Using SSE2
+    #[test]
+    fn test_asm_simd() {
+        let a = [1, 2, 3, 4];
+        let b = [5, 6, 7, 8];
+        let result = simd_add_4(&a, &b);
+        assert_eq!(result, [6, 8, 10, 12]);
     }
 
     // C math tests
