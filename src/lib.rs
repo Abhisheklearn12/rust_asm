@@ -3,7 +3,6 @@
 //! This library demonstrates integration of Rust with assembly.
 
 // ASSEMBLY FUNCTION FFI DECLARATIONS
-
 unsafe extern "C" {
     pub fn asm_add(a: i64, b: i64) -> i64;
     pub fn asm_multiply(a: i64, b: i64) -> i64;
@@ -14,7 +13,6 @@ unsafe extern "C" {
 }
 
 // C FUNCTION FFI DECLARATIONS
-
 unsafe extern "C" {
     // Math utilities
     pub fn c_power(base: i64, exponent: i32) -> i64;
@@ -25,7 +23,6 @@ unsafe extern "C" {
 }
 
 // SAFE RUST WRAPPERS - ASSEMBLY FUNCTIONS
-
 pub fn add(a: i64, b: i64) -> i64 {
     unsafe { asm_add(a, b) }
 }
@@ -47,8 +44,7 @@ pub fn simd_add_4(a: &[i32; 4], b: &[i32; 4]) -> [i32; 4] {
     result
 }
 
-// SAFE RUST WRAPPERS - C MATH FUNCTIONS
-
+// SAFE RUST WRAPPERS - C MATH FUNCTIONS\
 pub fn power(base: i64, exponent: i32) -> i64 {
     unsafe { c_power(base, exponent) }
 }
@@ -70,7 +66,6 @@ pub fn fibonacci(n: i32) -> i64 {
 }
 
 // TESTS
-
 #[cfg(test)]
 mod tests {
     use super::*;
