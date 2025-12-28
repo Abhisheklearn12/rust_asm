@@ -38,7 +38,7 @@ pub fn factorial(n: i64) -> i64 {
     unsafe { asm_factorial(n) }
 }
 
-// Sage Rust WRASPPER for SIMD Addition using SSE2
+// SAFE Rust WRAPPER for SIMD Addition using SSE2
 pub fn simd_add_4(a: &[i32; 4], b: &[i32; 4]) -> [i32; 4] {
     let mut result = [0i32; 4];
     unsafe {
