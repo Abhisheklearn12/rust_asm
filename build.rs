@@ -12,6 +12,7 @@ fn main() {
     // Compile C files
     cc::Build::new()
         .file("src/c/math_utils.c")
+        .file("src/c/array_ops.c")
         .include("src/c")
         .opt_level(3)
         .flag("-Wall")

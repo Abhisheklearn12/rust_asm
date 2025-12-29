@@ -20,6 +20,14 @@ unsafe extern "C" {
     pub fn c_lcm(a: i64, b: i64) -> i64;
     pub fn c_is_prime(n: i64) -> i32;
     pub fn c_fibonacci(n: i32) -> i64;
+
+    // Array operations
+    pub fn c_array_sum(arr: *const i64, len: usize) -> i64;
+    pub fn c_array_max(arr: *const i64, len: usize) -> i64;
+    pub fn c_array_min(arr: *const i64, len: usize) -> i64;
+    pub fn c_array_average(arr: *const i64, len: usize) -> f64;
+    pub fn c_binary_search(arr: *const i64, len: usize, target: i64) -> i32;
+    pub fn c_bubble_sort(arr: *mut i64, len: usize);
 }
 
 // SAFE RUST WRAPPERS - ASSEMBLY FUNCTIONS
@@ -44,7 +52,7 @@ pub fn simd_add_4(a: &[i32; 4], b: &[i32; 4]) -> [i32; 4] {
     result
 }
 
-// SAFE RUST WRAPPERS - C MATH FUNCTIONS\
+// SAFE RUST WRAPPERS - C MATH FUNCTIONS
 pub fn power(base: i64, exponent: i32) -> i64 {
     unsafe { c_power(base, exponent) }
 }
@@ -63,6 +71,38 @@ pub fn is_prime(n: i64) -> bool {
 
 pub fn fibonacci(n: i32) -> i64 {
     unsafe { c_fibonacci(n) }
+}
+
+// SAFE RUST WRAPPERS - C ARRAY FUNCTIONS
+pub fn array_sum(arr: &[i64]) -> i64 {
+    unsafe { c_array_sum(arr.as_ptr(), arr.len()) }
+}
+
+pub fn array_max(arr: &[i64]) -> i64 {
+    unsafe { c_array_max(arr.as_ptr(), arr.len()) }
+}
+
+pub fn array_min(arr: &[i64]) -> i64 {
+    unsafe { c_array_min(arr.as_ptr(), arr.len()) }
+}
+
+pub fn array_average(arr: &[i64]) -> f64 {
+    unsafe { c_array_average(arr.as_ptr(), arr.len()) }
+}
+
+pub fn binary_search(arr: &[i64], target: i64) -> Option<usize> {
+    unsafe {
+        let result = c_binary_search(arr.as_ptr(), arr.len(), target);
+        if result >= 0 {
+            Some(result as usize)
+        } else {
+            None
+        }
+    }
+}
+
+pub fn bubble_sort(arr: &mut [i64]) {
+    unsafe { c_bubble_sort(arr.as_mut_ptr(), arr.len()) }
 }
 
 // TESTS
@@ -129,5 +169,18 @@ mod tests {
     fn test_c_fibonacci() {
         assert_eq!(fibonacci(10), 55);
         assert_eq!(fibonacci(15), 610);
+    }
+
+    // C array tests
+    #[test]
+    fn test_c_array_sum() {
+        assert_eq!(array_sum(&[1, 2, 3, 4, 5]), 15);
+    }
+
+    #[test]
+    fn test_c_binary_search() {
+        let arr = [1, 3, 5, 7, 9, 11];
+        assert_eq!(binary_search(&arr, 7), Some(3));
+        assert_eq!(binary_search(&arr, 4), None);
     }
 }

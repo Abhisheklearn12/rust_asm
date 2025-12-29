@@ -43,4 +43,25 @@ fn main() {
         print!("{} ", fibonacci(i));
     }
     println!();
+
+    // C ARRAY FUNCTIONS DEMO
+    println!("\nC ARRAY FUNCTIONS:");
+
+    let numbers = vec![15, 3, 8, 12, 6, 20, 1, 9];
+    println!("Array: {:?}", numbers);
+    println!("  Sum: {}", array_sum(&numbers));
+    println!("  Max: {}", array_max(&numbers));
+    println!("  Min: {}", array_min(&numbers));
+    println!("  Average: {:.2}", array_average(&numbers));
+
+    let sorted = vec![1, 3, 5, 7, 9, 11, 13, 15];
+    println!("\nBinary search in sorted array: {:?}", sorted);
+    println!("  Search for 7: {:?}", binary_search(&sorted, 7));
+    println!("  Search for 10: {:?}", binary_search(&sorted, 10));
+
+    let mut unsorted = vec![64, 34, 25, 12, 22, 11, 90];
+    println!("\nBubble sort:");
+    println!("  Before: {:?}", unsorted);
+    bubble_sort(&mut unsorted);
+    println!("  After:  {:?}", unsorted);
 }
