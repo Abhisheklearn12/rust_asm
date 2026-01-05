@@ -13,6 +13,7 @@ fn main() {
     cc::Build::new()
         .file("src/c/math_utils.c")
         .file("src/c/array_ops.c")
+        .file("src/c/string_utils.c")
         .include("src/c")
         .opt_level(3)
         .flag("-Wall")

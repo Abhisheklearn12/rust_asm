@@ -1,7 +1,7 @@
 //! # Rust + x86-64 Assembly
 //!
 //! This library demonstrates integration of Rust with assembly.
-
+use std::os::raw::c_char;
 // ASSEMBLY FUNCTION FFI DECLARATIONS
 unsafe extern "C" {
     pub fn asm_add(a: i64, b: i64) -> i64;
@@ -28,6 +28,13 @@ unsafe extern "C" {
     pub fn c_array_average(arr: *const i64, len: usize) -> f64;
     pub fn c_binary_search(arr: *const i64, len: usize, target: i64) -> i32;
     pub fn c_bubble_sort(arr: *mut i64, len: usize);
+
+    // String utilities
+    pub fn c_string_reverse(s: *mut c_char, len: usize);
+    pub fn c_is_palindrome(s: *const c_char, len: usize) -> i32;
+    pub fn c_count_char(s: *const c_char, len: usize, ch: c_char) -> usize;
+    pub fn c_to_uppercase(s: *mut c_char, len: usize);
+    pub fn c_to_lowercase(s: *mut c_char, len: usize);
 }
 
 // SAFE RUST WRAPPERS - ASSEMBLY FUNCTIONS
@@ -43,7 +50,7 @@ pub fn factorial(n: i64) -> i64 {
     unsafe { asm_factorial(n) }
 }
 
-// SAFE Rust WRAPPER for SIMD Addition using SSE2
+// SAFE RUST WRAPPER for SIMD Addition using SSE2
 pub fn simd_add_4(a: &[i32; 4], b: &[i32; 4]) -> [i32; 4] {
     let mut result = [0i32; 4];
     unsafe {
@@ -103,6 +110,36 @@ pub fn binary_search(arr: &[i64], target: i64) -> Option<usize> {
 
 pub fn bubble_sort(arr: &mut [i64]) {
     unsafe { c_bubble_sort(arr.as_mut_ptr(), arr.len()) }
+}
+
+// SAFE RUST WRAPPERS - C STRING FUNCTIONS
+pub fn string_reverse(s: &mut String) {
+    unsafe {
+        let bytes = s.as_mut_vec();
+        c_string_reverse(bytes.as_mut_ptr() as *mut c_char, bytes.len());
+    }
+}
+
+pub fn is_palindrome(s: &str) -> bool {
+    unsafe { c_is_palindrome(s.as_ptr() as *const c_char, s.len()) != 0 }
+}
+
+pub fn count_char(s: &str, ch: char) -> usize {
+    unsafe { c_count_char(s.as_ptr() as *const c_char, s.len(), ch as c_char) }
+}
+
+pub fn to_uppercase(s: &mut String) {
+    unsafe {
+        let bytes = s.as_mut_vec();
+        c_to_uppercase(bytes.as_mut_ptr() as *mut c_char, bytes.len());
+    }
+}
+
+pub fn to_lowercase(s: &mut String) {
+    unsafe {
+        let bytes = s.as_mut_vec();
+        c_to_lowercase(bytes.as_mut_ptr() as *mut c_char, bytes.len());
+    }
 }
 
 // TESTS
@@ -182,5 +219,19 @@ mod tests {
         let arr = [1, 3, 5, 7, 9, 11];
         assert_eq!(binary_search(&arr, 7), Some(3));
         assert_eq!(binary_search(&arr, 4), None);
+    }
+
+    // C string tests
+    #[test]
+    fn test_c_string_reverse() {
+        let mut s = String::from("hello");
+        string_reverse(&mut s);
+        assert_eq!(s, "olleh");
+    }
+
+    #[test]
+    fn test_c_is_palindrome() {
+        assert!(is_palindrome("racecar"));
+        assert!(!is_palindrome("hello"));
     }
 }

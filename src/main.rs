@@ -64,4 +64,56 @@ fn main() {
     println!("  Before: {:?}", unsorted);
     bubble_sort(&mut unsorted);
     println!("  After:  {:?}", unsorted);
+
+    // C STRING FUNCTIONS DEMO
+    println!("\n C MATH FUNCTIONS:");
+    println!("─────────────────────────────────────────────────────────────");
+
+    println!("Power function:");
+    println!("  2^10 = {}", power(2, 10));
+    println!("  5^3 = {}", power(5, 3));
+
+    println!("\nGCD and LCM:");
+    println!("  gcd(48, 18) = {}", gcd(48, 18));
+    println!("  lcm(12, 15) = {}", lcm(12, 15));
+
+    println!("\nPrime checking:");
+    for n in [17, 18, 19, 20, 97] {
+        println!("  is_prime({}) = {}", n, is_prime(n));
+    }
+
+    println!("\nFibonacci sequence:");
+    print!("  First 15 numbers: ");
+    for i in 0..15 {
+        print!("{} ", fibonacci(i));
+    }
+    println!();
+
+    // ========================================================================
+    // C STRING FUNCTIONS DEMO
+    // ========================================================================
+    println!("\n C STRING FUNCTIONS:");
+
+    let mut text = String::from("hello");
+    println!("Original: \"{}\"", text);
+    string_reverse(&mut text);
+    println!("Reversed: \"{}\"", text);
+
+    println!("\nPalindrome checking:");
+    for word in ["racecar", "hello", "madam", "world"] {
+        println!("  \"{}\" is palindrome: {}", word, is_palindrome(word));
+    }
+
+    let sample = "hello world";
+    println!("\nCharacter counting in \"{}\":", sample);
+    println!("  'l' appears {} times", count_char(sample, 'l'));
+    println!("  'o' appears {} times", count_char(sample, 'o'));
+
+    let mut upper = String::from("make me loud");
+    println!("\nCase conversion:");
+    println!("  Original: \"{}\"", upper);
+    to_uppercase(&mut upper);
+    println!("  Uppercase: \"{}\"", upper);
+    to_lowercase(&mut upper);
+    println!("  Lowercase: \"{}\"", upper);
 }
