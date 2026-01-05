@@ -65,9 +65,8 @@ fn main() {
     bubble_sort(&mut unsorted);
     println!("  After:  {:?}", unsorted);
 
-    // C STRING FUNCTIONS DEMO
+    // C STRING FUNCTIONS
     println!("\n C MATH FUNCTIONS:");
-    println!("─────────────────────────────────────────────────────────────");
 
     println!("Power function:");
     println!("  2^10 = {}", power(2, 10));
@@ -89,9 +88,7 @@ fn main() {
     }
     println!();
 
-    // ========================================================================
     // C STRING FUNCTIONS DEMO
-    // ========================================================================
     println!("\n C STRING FUNCTIONS:");
 
     let mut text = String::from("hello");
